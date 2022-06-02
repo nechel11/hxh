@@ -3,16 +3,17 @@ import json
 import time
 
 
-def get_package():
+def get_package(dict):
 
 	URL = "https://api.hh.ru/vacancies/"
 	page = 0
 	params = {
-		'text' : 'Python',
-		'area' : 1,
+		'text' : dict.get('text'),
+		'area' : dict.get('city'),
 		'page' : page,
-		'per_page' : 2,
-		'salary': 80000,
+		'per_page' : dict.get('per_page'),
+		'salary': dict.get('salary'),
+		'currency' : dict.get('currency')
 		#'employment' : 'probation' #full
 		#'experience' : 'noExperience' #	"between3And6"
 	}
@@ -40,21 +41,28 @@ def get_package():
 		else :
 			lst.append("Адрес не указан")
 		salary_start = k['salary']
-		salary_from = salary_start['from']
-		salary_to = salary_start['to']
-		salary_currency = salary_start['currency']
 		if salary_start != None:
+			salary_from = salary_start['from']
+			salary_to = salary_start['to']
+			salary_currency = salary_start['currency']
 			lst.append(f"З\п от  <u>{salary_from}</u> до <u>{salary_to}</u> валюта {salary_currency}")
 		else :
 			lst.append("З\п не указана")
-		snip = k['snippet']
-		lst.append(f"<b>Requirements</b> : {snip['requirement']}  \n<b>Responsibility</b> : {snip['responsibility']}")
+		snip_req = str(f"<b>Requirements :</b> {k['snippet']['requirement']}\n")
+		snip_res = str(f"<b>Responsibility :</b> {k['snippet']['responsibility']}")
+		snip_req = snip_req.replace('<highlighttext>',"")
+		snip_req = snip_req.replace('</highlighttext>',"")
+		snip_res = snip_res.replace('<highlighttext>',"")
+		snip_res = snip_res.replace('</highlighttext>',"")
+
+		lst.append(snip_req + snip_res)
 		#lst.append(f"Responsibility  {snip['responsibility']}")
 		#lst.append(k['schedule']['name'])
 		lst.append(f"<a href='{k['alternate_url']}'> ссылка на хх</a>")
 		lst.append("__________________")
+		
 	return lst
 
-lst = get_package()
-for k in lst:
-	print (k)
+# lst = get_package()
+# for k in lst:
+# 	print (k)
