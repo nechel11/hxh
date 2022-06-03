@@ -29,14 +29,7 @@ def get_user_text(message):
 		except Exception as e:
 			bot.send_message(message.chat.id, f'что-то пошло не так. попробуй еще раз через 10 мин, если не работает, то пиши автору')
 		if not lst:
-			bot.send_message(message.chat.id, f'что-то пошло не так. проверь данные. \n\
-			Профессия -  {dict.get("text")} \n\
-			Город - {dict.get("city")} \n\
-			Валюта - {dict.get("currency")} \n\
-			З\п - {dict.get("currency")} \n\
-			per_page - {dict.get("per_page")} \n\
-			page - {dict.get("page")} \n\
-			если все ок, то пиши @nechel1233 ')
+			error_handler(message)
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 		btn_more = types.KeyboardButton('Ещё')
 		markup.add(btn_more)
@@ -49,14 +42,7 @@ def get_user_text(message):
 		except Exception as e:
 			bot.send_message(message.chat.id, 'что-то пошло не так. проверь данные. если все ок, то пиши автору')
 		if not lst:
-			bot.send_message(message.chat.id, f'что-то пошло не так. проверь данные. \n\
-			Профессия -  {dict.get("text")} \n\
-			Город - {dict.get("city")} \n\
-			Валюта - {dict.get("currency")} \n\
-			З\п - {dict.get("currency")} \n\
-			per_page - {dict.get("per_page")} \n\
-			page - {dict.get("page")} \n\
-			если все ок, то пиши @nechel1233 ')
+			error_handler(message)
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 		btn_more = types.KeyboardButton('Ещё')
 		for k in lst:
@@ -64,6 +50,15 @@ def get_user_text(message):
 	else :
 		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
 
+def error_handler(message):
+	bot.send_message(message.chat.id, f'что-то пошло не так. проверь данные. \n\
+			Профессия -  {dict.get("text")} \n\
+			Город - {dict.get("city")} \n\
+			Валюта - {dict.get("currency")} \n\
+			З\п - {dict.get("currency")} \n\
+			per_page - {dict.get("per_page")} \n\
+			page - {dict.get("page")} \n\
+			если все ок, то пиши @nechel1233 ')
 
 def proff_to_dict(message):
 	dict['text'] = message.text
@@ -125,7 +120,7 @@ def salary_to_dict(message):
 		btn_per_page_3 = types.KeyboardButton(15)
 		btn_per_page_4 = types.KeyboardButton(20)
 		markup_5.add(btn_per_page_1, btn_per_page_2, btn_per_page_3, btn_per_page_4)
-		msg = bot.send_message(message.chat.id, 'Выбери кол-во выгружаемых вакансий', reply_markup=markup_5)
+		msg = bot.send_message(message.chat.id, 'Выбери кол-во выгружаемых вакансий или укажи свое', reply_markup=markup_5)
 		bot.register_next_step_handler(msg, per_page_to_dict)
 
 def per_page_to_dict(message):
@@ -133,7 +128,7 @@ def per_page_to_dict(message):
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_finish = types.KeyboardButton('finish')
 	markup.add(btn_finish)
-	bot.send_message(message.chat.id, 'Жми финиш для окончания', reply_markup=markup)
+	bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
 
 
 bot.polling(non_stop=True)
