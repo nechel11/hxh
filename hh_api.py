@@ -6,11 +6,10 @@ import time
 def get_package(dict):
 
 	URL = "https://api.hh.ru/vacancies/"
-	page = 0
 	params = {
 		'text' : dict.get('text'),
 		'area' : dict.get('city'),
-		'page' : page,
+		'page' : dict.get('page'),
 		'per_page' : dict.get('per_page'),
 		'salary': dict.get('salary'),
 		'currency' : dict.get('currency')
@@ -25,10 +24,8 @@ def get_package(dict):
 		print(e)
 	data = request.content.decode()
 	data = json.loads(data)
-	#print(data)
 	lst = []
 	for k in data['items']:
-		#print(k)
 		lst.append(str(f"{k['name']} | {k['employer']['name']} | {k['schedule']['name']}"))
 		if k['address'] != None:
 			if (k['address']['street']) != None:
@@ -55,14 +52,8 @@ def get_package(dict):
 		snip_res = snip_res.replace('<highlighttext>',"")
 		snip_res = snip_res.replace('</highlighttext>',"")
 
-		lst.append(snip_req + snip_res)
-		#lst.append(f"Responsibility  {snip['responsibility']}")
-		#lst.append(k['schedule']['name'])
+		lst.append(snip_res + snip_req)
 		lst.append(f"<a href='{k['alternate_url']}'> ссылка на хх</a>")
 		lst.append("__________________")
 		
 	return lst
-
-# lst = get_package()
-# for k in lst:
-# 	print (k)
