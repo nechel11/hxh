@@ -25,21 +25,7 @@ def get_user_text(message):
 	elif (message.text == 'finish'):
 		utils_messages.if_finish(message, dict, bot)
 	elif(message.text == 'Ещё'):
-		dict['page'] += 1
-		if (utils_error.dict_cheq(dict, message, bot)):
-			try :
-				lst = hh_api.get_package(dict)
-			except Exception as e:
-				bot.send_message(message.chat.id, 'что-то пошло не так. проверь данные. если все ок, то пиши автору')
-			if not lst:
-				utils_error.error_handler(message, dict, bot)
-			markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-			btn_more = types.KeyboardButton('Ещё')
-			for k in lst:
-				bot.send_message(message.chat.id, k, parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
-		else : 
-			bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')	
-		print(dict)	
+		utils_messages.if_more(message, dict, bot)
 	else :
 		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
 
