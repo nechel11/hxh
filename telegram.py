@@ -4,6 +4,7 @@ import telebot
 from telebot import types
 import hh_api
 import re
+from utils import utils_error
 
 bot = telebot.TeleBot('5432709533:AAF5jAjDJNbZsE2LtsGO7qwd0dwPvuTThKA')
 dict = {'page' : 0}
@@ -26,13 +27,13 @@ def get_user_text(message):
 		msg = bot.send_message(message.chat.id, 'Укажи профессию <u>(1-2 слова)</u>', parse_mode='html')
 		bot.register_next_step_handler(msg, proff_to_dict)
 	elif (message.text == 'finish'):
-		if (dict_cheq(dict, message)):
+		if (utils_error.dict_cheq(dict, message, bot)):
 			try :
 				lst = hh_api.get_package(dict)
 			except Exception as e:
 				bot.send_message(message.chat.id, f'что-то пошло не так. попробуй еще раз через 10 мин, если не работает, то пиши автору')
 			if not lst:
-				error_handler(message)
+				utils_error.error_handler(message, dict, bot)
 			markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 			btn_more = types.KeyboardButton('Ещё')
 			markup.add(btn_more)
@@ -43,13 +44,13 @@ def get_user_text(message):
 			bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')
 	elif(message.text == 'Ещё'):
 		dict['page'] += 1
-		if (dict_cheq(dict, message)):
+		if (utils_error.dict_cheq(dict, message, bot)):
 			try :
 				lst = hh_api.get_package(dict)
 			except Exception as e:
 				bot.send_message(message.chat.id, 'что-то пошло не так. проверь данные. если все ок, то пиши автору')
 			if not lst:
-				error_handler(message)
+				utils_error.error_handler(message, dict, bot)
 			markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 			btn_more = types.KeyboardButton('Ещё')
 			for k in lst:
@@ -59,17 +60,6 @@ def get_user_text(message):
 		print(dict)	
 	else :
 		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
-
-
-def error_handler(message):
-	bot.send_message(message.chat.id, f'что-то пошло не так. проверь данные. \n\
-			Профессия -  {dict.get("text")} \n\
-			Город - {dict.get("city")} \n\
-			Валюта - {dict.get("currency")} \n\
-			З\п - {dict.get("currency")} \n\
-			per_page - {dict.get("per_page")} \n\
-			page - {dict.get("page")} \n\
-			если все ок, то пиши @nechel1233 ')
 
 
 def proff_to_dict(message):
@@ -113,8 +103,6 @@ def city_to_dict(message):
 		msg_error = bot.send_message(message.chat.id, 'Выбери из трех предложенных')
 		bot.register_next_step_handler(msg_error, city_to_dict)
 	
-	
-
 
 def currency_to_dict(message):
 	if  message.text =='RUR' :
@@ -142,7 +130,6 @@ def currency_to_dict(message):
 		bot.register_next_step_handler(msg_error, currency_to_dict)	
 		
 
-
 def salary_to_dict(message):
 	dict['salary'] = re.sub("[^0-9]", "", message.text)
 	markup_5 = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -163,12 +150,4 @@ def per_page_to_dict(message):
 	bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
 
 
-def dict_cheq(dct, message) : # check if dict is filled 
-	if ('text' in dct and 'city' in dct and 
-		'currency' in dct and 'salary' in dct and
-		 'per_page' in dct):
-		return True
-	else:
-		error_handler(message)
-		return False
 bot.polling(non_stop=True)
