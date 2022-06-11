@@ -21,25 +21,9 @@ def start(message):
 def get_user_text(message):
 	lst = []
 	if message.text == 'Start':
-		# msg = bot.send_message(message.chat.id, 'Укажи профессию <u>(1-2 слова)</u>', parse_mode='html')
-		# bot.register_next_step_handler(msg, utils_to_dict.proff_to_dict, dict, bot)
 		utils_messages.if_start(message, dict, bot)
 	elif (message.text == 'finish'):
-		if (utils_error.dict_cheq(dict, message, bot)):
-			try :
-				lst = hh_api.get_package(dict)
-			except Exception as e:
-				bot.send_message(message.chat.id, f'что-то пошло не так. попробуй еще раз через 10 мин, если не работает, то пиши автору')
-			if not lst:
-				utils_error.error_handler(message, dict, bot)
-			markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-			btn_more = types.KeyboardButton('Ещё')
-			markup.add(btn_more)
-			for k in lst:
-				bot.send_message(message.chat.id, k, parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
-			print(dict)
-		else : 
-			bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')
+		utils_messages.if_finish(message, dict, bot)
 	elif(message.text == 'Ещё'):
 		dict['page'] += 1
 		if (utils_error.dict_cheq(dict, message, bot)):
