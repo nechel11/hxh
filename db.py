@@ -6,7 +6,7 @@ import psycopg2
 # conn.commit()
 
 class BotDB:
-	def __init__(self, db_file) -> None:
+	def __init__(self) -> None:
 		self.conn = psycopg2.connect(host='127.0.0.1', port=5432, dbname='hxh', user = 'zafar', password='12344321')
 		self.cursor = self.conn.cursor()
 
@@ -22,8 +22,9 @@ class BotDB:
 		self.cursor.execute("INSERT INTO users(telegram_id) VALUES (%s)", (str(telegram_id),))
 		return self.conn.commit()
 
-	def add_record(self, telegram_id, proff, vacancy):
-		self.cursor.execute("INSERT INTO records(telegram_id, proff, vanacy) VALUES (%s, %s, %s)",
+	def add_record(self, telegram_id, proff, vacancy, company, schedule, vacancy_id, adress,
+		salary_from, salary_to, requir, respons, URL ):
+		self.cursor.execute("INSERT INTO records(telegram_id, proff, vacancy) VALUES (%s, %s, %s)",
 		(self.get_user_id(telegram_id), proff, vacancy))
 		return self.conn.commit()
 	
