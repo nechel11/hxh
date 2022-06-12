@@ -10,6 +10,7 @@ def error_handler(message, dict, bot):
 			если все ок, то пиши @nechel1233 ')
 
 def dict_cheq(dct, message, bot) : # check if dict is filled 
+	print(dct)
 	if ('text' in dct and 'city' in dct and 
 		'currency' in dct and 'salary' in dct and
 		 'per_page' in dct):

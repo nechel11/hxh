@@ -5,7 +5,6 @@ from utils import utils_error, utils_to_dict, utils_messages
 
 bot = telebot.TeleBot('5432709533:AAF5jAjDJNbZsE2LtsGO7qwd0dwPvuTThKA')
 dict = {'page' : 0}
-page = 0
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -19,7 +18,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def get_user_text(message):
-	lst = []
+	
 	if message.text == 'Start':
 		utils_messages.if_start(message, dict, bot)
 	elif (message.text == 'finish'):
