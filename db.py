@@ -24,8 +24,9 @@ class BotDB:
 
 	def add_record(self, telegram_id, proff, vacancy, company, schedule, vacancy_id, adress,
 		salary_from, salary_to, requir, respons, URL ):
-		self.cursor.execute("INSERT INTO records(telegram_id, proff, vacancy) VALUES (%s, %s, %s)",
-		(self.get_user_id(telegram_id), proff, vacancy))
+		self.cursor.execute("INSERT INTO records(telegram_id, proff, vacancy) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		(self.get_user_id(telegram_id), proff, vacancy, company, schedule, vacancy_id, adress,
+		salary_from, salary_to, requir, respons, URL  ))
 		return self.conn.commit()
 	
 	def get_records(self, telegram_id):

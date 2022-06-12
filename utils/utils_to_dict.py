@@ -2,6 +2,8 @@ import telebot
 from telebot import types
 import hh_api
 import re
+from db import BotDB
+import db
 
 def proff_to_dict(message, dict, bot):
 	dict['text'] = message.text
@@ -87,4 +89,5 @@ def per_page_to_dict(message, dict, bot):
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_finish = types.KeyboardButton('finish')
 	markup.add(btn_finish)
+	
 	bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
