@@ -7,12 +7,11 @@ import db
 
 bot = telebot.TeleBot('5432709533:AAF5jAjDJNbZsE2LtsGO7qwd0dwPvuTThKA')
 dict = {'page' : 0}
-BotDB = BotDB()
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
-	if(not BotDB.user_exists(message.from_user.id)):
-		BotDB.add_user(message.from_user.id)
+	
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_next = types.KeyboardButton('Start')
 	markup.add(btn_next)

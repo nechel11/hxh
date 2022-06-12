@@ -19,30 +19,32 @@ def add_adress(k) :
 	return st
 	
 def add_salary(k):
+	dct={}
 	salary_start = k['salary']
 	if salary_start != None:
-		salary_from = salary_start['from']
-		salary_to = salary_start['to']
-		salary_currency = salary_start['currency']
-		st = (f"<b>З\п от  <u>{salary_from}</u> до <u>{salary_to}</u></b> валюта {salary_currency}")
-	else :
-		st = ("З\п не указана")
-	return st
-
+		dct['salary_from'] = salary_start['from']
+		dct['salary_to'] = salary_start['to']
+		dct['currency'] = salary_start['currency']
+		return dct
+	return None
+	
 
 def add_req(k):
+	dct = {}
 	snip_req = str(f"<b><u>Требования :</u></b>\n 	{k['snippet']['requirement']}")
 	snip_res = str(f"<b><u>Обязанности :</u></b>\n 	{k['snippet']['responsibility']}\n")
 	snip_req = snip_req.replace('<highlighttext>',"")
 	snip_req = snip_req.replace('</highlighttext>',"")
 	snip_res = snip_res.replace('<highlighttext>',"")
 	snip_res = snip_res.replace('</highlighttext>',"")
-	res = (snip_res + snip_req)
-	res = res + (f"\n<a href='{k['alternate_url']}'> ссылка на вакансию</a>")
-	return res
+	dct['requir'] = snip_req
+	dct['respons'] = snip_res
+	dct['URL'] = k['alternate_url']
+	return dct
 
 
 def get_package(dict):
+	dct = {}
 	lst = []
 	URL = "https://api.hh.ru/vacancies/"
 	params = {
@@ -64,8 +66,25 @@ def get_package(dict):
 	data = request.content.decode()
 	data = json.loads(data)
 	for k in data['items']:
-		lst.append(str(f"<b><u>{k['name']}</u></b> | {k['employer']['name']} | \
-		{k['schedule']['name']}\n{add_adress(k)}\n{add_salary(k)}\n{add_req(k)}"))
+		dct['proff'] = dict.get('text')
+		dct['vacancy'] = k['name']
+		dct['vacancy_id'] = k['id']
+		dct['company'] = k['employer']['name']
+		dct['schedule'] = k['schedule']['name']
+		dct['adress'] = add_adress(k)
+		sal = add_salary(k)
+		if sal != None:
+			dct['salary_from'] = sal.get('salary_from')
+			dct['salary_to'] = sal.get('salary_to')
+			dct['currency'] = sal.get('currency')
+		else:
+			dct['salary'] = 'З\п не укaазана'
+		inf = add_req(k)
+		dct['requir'] = inf.get('requir')
+		dct['respons'] = inf.get('respons')
+		dct['URL'] = inf.get('URL')
+		lst.append(dct)
+		
 	return lst
 
 # if __name__ == '__main__':
@@ -73,9 +92,8 @@ def get_package(dict):
 # 	dict['text'] = 'python'
 # 	dict['city'] = 1
 # 	dict['page'] = 0
-# 	dict['pre_page'] = 5
+# 	dict['per_page'] = 1
 # 	dict['salary'] = 80000
 # 	dict['currency'] = 'RUR'
 # 	qwe = get_package(dict)
-# 	for k in qwe:
-# 		print(k)
+# 	print (qwe)
