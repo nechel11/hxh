@@ -50,7 +50,7 @@ def add_req(k):
 
 
 def get_package(dict):
-	dct = {}
+	
 	lst = []
 	URL = "https://api.hh.ru/vacancies/"
 	params = {
@@ -72,7 +72,7 @@ def get_package(dict):
 	data = request.content.decode()
 	data = json.loads(data)
 	for k in data['items']:
-		print(data['items'])
+		dct = {}
 		dct['proff'] = dict.get('text')
 		dct['vacancy'] = k['name']
 		dct['vacancy_id'] = k['id']
@@ -85,22 +85,24 @@ def get_package(dict):
 			dct['salary_to'] = sal.get('salary_to')
 			dct['currency'] = sal.get('currency')
 		else:
-			dct['salary'] = 'З\п не укaазана'
+			dct['salary_from'] = None
+			dct['salary_to'] = None
+			dct['currency'] = None
 		inf = add_req(k)
 		dct['requir'] = inf.get('requir')
 		dct['respons'] = inf.get('respons')
 		dct['URL'] = inf.get('URL')
 		lst.append(dct)
-		
 	return lst
 
-if __name__ == '__main__':
-	dict = {}
-	dict['text'] = 'python'
-	dict['city'] = 1
-	dict['page'] = 0
-	dict['per_page'] = 4
-	dict['salary'] = 80000
-	dict['currency'] = 'RUR'
-	qwe = get_package(dict)
-	#print (qwe)
+# if __name__ == '__main__':
+# 	dict = {}
+# 	dict['text'] = 'python'
+# 	dict['city'] = 1
+# 	dict['page'] = 0
+# 	dict['per_page'] = 2
+# 	dict['salary'] = 80000
+# 	dict['currency'] = 'RUR'
+# 	qwe = get_package(dict)
+# 	for k in qwe:
+# 		print (k)

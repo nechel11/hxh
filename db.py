@@ -18,15 +18,13 @@ class BotDB:
 		self.cursor.execute("INSERT INTO users(telegram_id) VALUES (%s)", (str(telegram_id),))
 		return self.conn.commit()
 
-	def add_record(self, telegram_id, proff, vacancy,
-		salary_from, salary_to, requir, respons, url, company, schedule, vacancy_id, adress):
+	def add_record(self, telegram_id, proff, vacancy, salary_from, salary_to, requir, respons, url, company, schedule, vacancy_id, adress):
 		self.cursor.execute("INSERT INTO records(fk_telegram_id, proff, vacancy,\
 		salary_from, salary_to, requir, respons, url, company, schedule, \
 		vacancy_id, adress)  VALUES \
-		 (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", (
-		str(telegram_id), proff, vacancy,
-		salary_from, salary_to, requir, respons, url, company, schedule, \
-		vacancy_id, adress,))
+		(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+		(str(telegram_id), proff, vacancy, salary_from, salary_to, requir, 
+		respons, url, company, schedule, vacancy_id, adress,))
 		return self.conn.commit()
 	
 	def get_records(self, telegram_id):
