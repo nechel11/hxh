@@ -22,8 +22,14 @@ def add_salary(k):
 	dct={}
 	salary_start = k['salary']
 	if salary_start != None:
-		dct['salary_from'] = salary_start['from']
-		dct['salary_to'] = salary_start['to']
+		if salary_start['from'] == None:
+			dct['salary_from'] = '0'
+		else:	
+			dct['salary_from'] = str(salary_start['from'])
+		if salary_start['to'] == None:
+			dct['salary_to'] = '0'
+		else:	
+			dct['salary_to'] = str(salary_start['to'])
 		dct['currency'] = salary_start['currency']
 		return dct
 	return None
@@ -31,8 +37,8 @@ def add_salary(k):
 
 def add_req(k):
 	dct = {}
-	snip_req = str(f"<b><u>Требования :</u></b>\n 	{k['snippet']['requirement']}")
-	snip_res = str(f"<b><u>Обязанности :</u></b>\n 	{k['snippet']['responsibility']}\n")
+	snip_req = str(f"Требования :\n 	{k['snippet']['requirement']}")
+	snip_res = str(f"Обязанности :\n 	{k['snippet']['responsibility']}\n")
 	snip_req = snip_req.replace('<highlighttext>',"")
 	snip_req = snip_req.replace('</highlighttext>',"")
 	snip_res = snip_res.replace('<highlighttext>',"")
@@ -66,6 +72,7 @@ def get_package(dict):
 	data = request.content.decode()
 	data = json.loads(data)
 	for k in data['items']:
+		print(data['items'])
 		dct['proff'] = dict.get('text')
 		dct['vacancy'] = k['name']
 		dct['vacancy_id'] = k['id']
@@ -87,13 +94,13 @@ def get_package(dict):
 		
 	return lst
 
-# if __name__ == '__main__':
-# 	dict = {}
-# 	dict['text'] = 'python'
-# 	dict['city'] = 1
-# 	dict['page'] = 0
-# 	dict['per_page'] = 1
-# 	dict['salary'] = 80000
-# 	dict['currency'] = 'RUR'
-# 	qwe = get_package(dict)
-# 	print (qwe)
+if __name__ == '__main__':
+	dict = {}
+	dict['text'] = 'python'
+	dict['city'] = 1
+	dict['page'] = 0
+	dict['per_page'] = 4
+	dict['salary'] = 80000
+	dict['currency'] = 'RUR'
+	qwe = get_package(dict)
+	#print (qwe)

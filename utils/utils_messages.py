@@ -15,10 +15,11 @@ def if_start(message, dict, bot):
 
 def add_to_db(message, lst):
 	for k in lst:
-		BotDB.add_record(message.from_user.id, k['proff'],k['vacancy'], k['company'],
-		k['schedule'], k['vacancy_id'], k['adress'], k['salary_from'], k['salary_to'],
-		k['requir'], k['respons'], k['URL'])
-
+		BotDB.add_record(message.from_user.id, k['proff'], k['vacancy'], k['salary_from'],
+		k['salary_to'], k['requir'], k['respons'], k['URL'], k['company'], k['schedule'],
+		k['vacancy_id'], k['adress'])
+		
+		
 def if_finish(message, dict, bot):
 	lst =[]
 	if (utils_error.dict_cheq(dict, message, bot)):
@@ -31,7 +32,6 @@ def if_finish(message, dict, bot):
 			markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 			btn_more = types.KeyboardButton('Ещё')
 			markup.add(btn_more)
-			print(lst)
 			add_to_db(message, lst)
 			for k in lst:
 				bot.send_message(message.chat.id, k , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
