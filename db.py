@@ -11,7 +11,7 @@ class BotDB:
 		return bool(len(self.cursor.fetchall()))
 
 	def get_user_id(self, telegram_id):
-		self.cursor.execute("SELECT user_id FROM users WHERE telegram_id=(%s)", (str(telegram_id),))
+		self.cursor.execute("SELECT fk_telegram_id FROM records WHERE fk_telegram_id=(%s)", (str(telegram_id),))
 		return self.cursor.fetchone()[0]
 
 	def add_user(self, telegram_id):
@@ -28,7 +28,7 @@ class BotDB:
 		return self.conn.commit()
 	
 	def get_records(self, telegram_id):
-		self.cursor.execute("SELECT * FROM records WHERE telegram_id (%s)", (telegram_id))
+		self.cursor.execute("SELECT * FROM records WHERE fk_telegram_id (%s)", (telegram_id))
 		return self.cursor.fetchall()
 
 	def close(self):

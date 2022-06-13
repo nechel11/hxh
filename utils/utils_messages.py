@@ -20,7 +20,14 @@ def add_to_db(message, lst):
 		k['salary_to'], k['requir'], k['respons'], k['URL'], k['company'], k['schedule'], 
 		k['vacancy_id'], k['adress'])
 		
-		
+def print_msg(message):
+	id = BotDB.get_user_id(message.from_user.id)
+	print(id)
+	# msg = BotDB.get_records(str(id))
+	# print(msg)
+	# return msg
+
+
 def if_finish(message, dict, bot):
 	lst =[]
 	if (utils_error.dict_cheq(dict, message, bot)):
@@ -34,8 +41,10 @@ def if_finish(message, dict, bot):
 			btn_more = types.KeyboardButton('Ещё')
 			markup.add(btn_more)
 			add_to_db(message, lst)
-			for k in lst:
-				bot.send_message(message.chat.id, k , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
+			print_msg(message)
+			# for _ in lst:
+			# 	msg = print_msg(message)
+			# 	bot.send_message(message.chat.id, msg , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
 			print(dict)
 	else : 
 		bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')
