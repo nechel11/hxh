@@ -3,7 +3,7 @@ import telebot
 from telebot import types
 import hh_api
 from db import BotDB
-import db
+import bot_msg
 
 BotDB = BotDB()
 
@@ -18,15 +18,8 @@ def add_to_db(message, lst):
 	for k in lst:
 		BotDB.add_record(message.from_user.id, k['proff'], k['vacancy'], k['salary_from'], 
 		k['salary_to'], k['requir'], k['respons'], k['URL'], k['company'], k['schedule'], 
-		k['vacancy_id'], k['adress'])
+		k['vacancy_id'], k['adress'], k['currency'])
 		
-def print_msg(message):
-	id = BotDB.get_user_id(message.from_user.id)
-	print(id)
-	# msg = BotDB.get_records(str(id))
-	# print(msg)
-	# return msg
-
 
 def if_finish(message, dict, bot):
 	lst =[]
@@ -41,11 +34,9 @@ def if_finish(message, dict, bot):
 			btn_more = types.KeyboardButton('Ещё')
 			markup.add(btn_more)
 			add_to_db(message, lst)
-			print_msg(message)
-			# for _ in lst:
-			# 	msg = print_msg(message)
-			# 	bot.send_message(message.chat.id, msg , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
-			print(dict)
+			html = bot_msg.print_msg(message, BotDB)
+			bot.send_message(message.chat.id, html , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
+			#print(dict)
 	else : 
 		bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')
 

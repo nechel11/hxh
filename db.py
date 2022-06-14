@@ -18,18 +18,25 @@ class BotDB:
 		self.cursor.execute("INSERT INTO users(telegram_id) VALUES (%s)", (str(telegram_id),))
 		return self.conn.commit()
 
-	def add_record(self, telegram_id, proff, vacancy, salary_from, salary_to, requir, respons, url, company, schedule, vacancy_id, adress):
+	def add_record(self, telegram_id, proff, vacancy, salary_from, 
+	salary_to, requir, respons, url, company, schedule, vacancy_id, adress, currency):
 		self.cursor.execute("INSERT INTO records(fk_telegram_id, proff, vacancy,\
 		salary_from, salary_to, requir, respons, url, company, schedule, \
-		vacancy_id, adress)  VALUES \
-		(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
+		vacancy_id, adress, currency)  VALUES \
+		(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", 
 		(str(telegram_id), proff, vacancy, salary_from, salary_to, requir, 
-		respons, url, company, schedule, vacancy_id, adress,))
+		respons, url, company, schedule, vacancy_id, adress, currency,))
 		return self.conn.commit()
 	
-	def get_records(self, telegram_id):
-		self.cursor.execute("SELECT * FROM records WHERE fk_telegram_id (%s)", (telegram_id))
+	def get_all_records(self, telegram_id):
+		self.cursor.execute("SELECT * FROM records WHERE fk_telegram_id=(%s)", (str(telegram_id),))
 		return self.cursor.fetchall()
+
+	def get_one_record(self, telegram_id, text):
+		self.cursor.execute(f"SELECT {text} FROM records WHERE fk_telegram_id=(%s)", (str(telegram_id),))
+		rows = self.cursor.fetchone()
+		# rows=[i[0] for i in rows]
+		return rows
 
 	def close(self):
 		self.conn.close()

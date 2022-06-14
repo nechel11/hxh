@@ -37,8 +37,8 @@ def add_salary(k):
 
 def add_req(k):
 	dct = {}
-	snip_req = str(f"Требования :\n 	{k['snippet']['requirement']}")
-	snip_res = str(f"Обязанности :\n 	{k['snippet']['responsibility']}\n")
+	snip_req = str(f"{k['snippet']['requirement']}")
+	snip_res = str(f"{k['snippet']['responsibility']}	")
 	snip_req = snip_req.replace('<highlighttext>',"")
 	snip_req = snip_req.replace('</highlighttext>',"")
 	snip_res = snip_res.replace('<highlighttext>',"")
