@@ -28,12 +28,12 @@ class BotDB:
 		respons, url, company, schedule, vacancy_id, adress, currency,))
 		return self.conn.commit()
 	
-	def get_all_records(self, telegram_id):
-		self.cursor.execute("SELECT * FROM records WHERE fk_telegram_id=(%s)", (str(telegram_id),))
+	def get_all_records(self, telegram_id, per_page):
+		self.cursor.execute(f"SELECT * FROM records WHERE fk_telegram_id=(%s) ORDER BY records_id DESC LIMIT {per_page}", (str(telegram_id),))
 		return self.cursor.fetchall()
 
-	def get_one_record(self, telegram_id, text):
-		self.cursor.execute(f"SELECT {text} FROM records WHERE fk_telegram_id=(%s) LIMIT 5", (str(telegram_id),))
+	def get_one_record(self, telegram_id, text, per_page):
+		self.cursor.execute(f"SELECT {text} FROM records WHERE fk_telegram_id=(%s) ORDER BY records_id DESC LIMIT {per_page}", (str(telegram_id),))
 		rows = self.cursor.fetchall()
 		rows=[i[0] for i in rows]
 		return rows

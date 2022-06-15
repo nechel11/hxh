@@ -4,6 +4,7 @@ import hh_api
 import re
 from db import BotDB
 import db
+from utils.utils_messages import if_finish
 
 def proff_to_dict(message, dict, bot):
 	dict['text'] = message.text
@@ -15,6 +16,7 @@ def proff_to_dict(message, dict, bot):
 	markup.add(btn_city_moscow, btn_city_spb, btn_city_tashkent)
 	msg = bot.send_message(message.chat.id, 'Выбери город', reply_markup=markup)	
 	bot.register_next_step_handler(msg, city_to_dict, dict, bot)
+	return dict
 
 def city_to_dict(message, dict, bot):
 	if message.text=='Москва':
@@ -83,11 +85,10 @@ def salary_to_dict(message, dict, bot):
 	msg = bot.send_message(message.chat.id, 'Выбери кол-во выгружаемых вакансий или укажи свое', reply_markup=markup_5)
 	bot.register_next_step_handler(msg, per_page_to_dict, dict, bot)
 
-
 def per_page_to_dict(message, dict, bot):
 	dict['per_page'] = message.text
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_finish = types.KeyboardButton('finish')
 	markup.add(btn_finish)
-	
-	bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
+	msg = bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
+	bot.register_next_step_handler(msg, if_finish, dict, bot)

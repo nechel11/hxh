@@ -1,3 +1,4 @@
+from copy import copy
 import re
 
 def make_html(template, settings):
@@ -7,13 +8,22 @@ def make_html(template, settings):
 		template = re.sub(tmp, replace, template)
 	return template
 
-def print_msg(message, BotDB):
-	lst = ['proff', 'vacancy','company', 'schedule', 'adress', 'salary_from', 'salary_to', 'currency','respons','requir','url']
+
+def print_msg(message, BotDB, per_page):
+	lst = ['id', 'telegram_id','proff', 'vacancy','salary_from', 'salary_to', 'requir','respons','url', 'company', 'schedule', 'vacancy_id', 'adress', 'currency']
 	id = BotDB.get_user_id(message.from_user.id)
-	dct = {}
-	for k in lst:
-		dct[k] = BotDB.get_one_record(str(id), k)
+	html = []
+	res = BotDB.get_all_records(str(id), per_page)
+	message_to_print= []
+	for i in res:
+		dct = {}
+		dct ={lst[j] : i[j] for j in range(0,len(lst))}
+		html.append(dct)
+	#print(html)	
 	with open ('bot_msg.html') as f:
 		template = f.read()
-	html = make_html(template, dct)
-	return html
+	copy_template = copy(template)
+	for i in html:
+		tmp = make_html(copy_template, i)
+		message_to_print.append(tmp)
+	return message_to_print

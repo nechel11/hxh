@@ -22,7 +22,6 @@ def add_to_db(message, lst):
 		
 
 def if_finish(message, dict, bot):
-	lst =[]
 	if (utils_error.dict_cheq(dict, message, bot)):
 			try :
 				lst = hh_api.get_package(dict)
@@ -34,9 +33,12 @@ def if_finish(message, dict, bot):
 			btn_more = types.KeyboardButton('Ещё')
 			markup.add(btn_more)
 			add_to_db(message, lst)
-			html = bot_msg.print_msg(message, BotDB)
-			bot.send_message(message.chat.id, html , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
-			#print(dict)
+			print(dict)
+			html = bot_msg.print_msg(message, BotDB, dict.get('per_page'))
+			for k in html[::-1]:
+				bot.send_message(message.chat.id, k , parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
+			msg = bot.send_message(message.chat.id, 'Жми <u>Ещё</u> для новых вакансий', reply_markup=markup, parse_mode='html')
+			bot.register_next_step_handler(msg, if_more, dict, bot)
 	else : 
 		bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')
 
@@ -50,10 +52,13 @@ def if_more(message, dict, bot):
 			bot.send_message(message.chat.id, 'что-то пошло не так. проверь данные. если все ок, то пиши автору')
 		if not lst:
 			utils_error.error_handler(message, dict, bot)
-		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 		add_to_db(message, lst)
-		for k in lst:
-			bot.send_message(message.chat.id, k, parse_mode='html', disable_web_page_preview=True, reply_markup=markup)
+		print(dict)
+		html = bot_msg.print_msg(message, BotDB, dict.get('per_page'))
+		for k in html[::-1]:
+			bot.send_message(message.chat.id, k , parse_mode='html', disable_web_page_preview=True)
+		msg = bot.send_message(message.chat.id, 'Жми <u>Ещё</u> для новых вакансий', parse_mode='html')
+		bot.register_next_step_handler(msg, if_more, dict, bot)	
 	else : 
 		bot.send_message(message.chat.id, 'Попробуй заново <u> /start </u>' , parse_mode='html')	
-	print(dict)	
+	
