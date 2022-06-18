@@ -1,8 +1,12 @@
 import psycopg2
+import json
 
 
 class BotDB:
 	def __init__(self) -> None:
+		with open ('../settings') as f:
+			template = f.read()
+		js = json.loads(template)
 		self.conn = psycopg2.connect(host='127.0.0.1', port=5432, dbname='hxh', user = 'zafar', password='12344321')
 		self.cursor = self.conn.cursor()
 

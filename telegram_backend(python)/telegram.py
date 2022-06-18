@@ -3,12 +3,12 @@ from telebot import types
 import hh_api
 from utils import utils_error, utils_to_dict, utils_messages
 from db import BotDB
-import db
+import json
 
 with open ('../settings') as f:
 	template = f.read()
-res = template.split(" ")
-bot = telebot.TeleBot(res[2])
+js = json.loads(template)
+bot = telebot.TeleBot(js.get('bot'))
 
 
 @bot.message_handler(commands=['start'])
