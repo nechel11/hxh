@@ -5,8 +5,10 @@ from utils import utils_error, utils_to_dict, utils_messages
 from db import BotDB
 import db
 
-bot = telebot.TeleBot('5432709533:AAF5jAjDJNbZsE2LtsGO7qwd0dwPvuTThKA')
-
+with open ('../settings') as f:
+	template = f.read()
+res = template.split(" ")
+bot = telebot.TeleBot(res[2])
 
 
 @bot.message_handler(commands=['start'])
@@ -28,5 +30,5 @@ def get_user_text(message):
 	else :
 		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
 
-
-bot.polling(non_stop=True)
+if __name__ == "__main__":
+	bot.polling(non_stop=True)
