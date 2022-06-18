@@ -7,7 +7,7 @@ class BotDB:
 		with open ('../settings') as f:
 			template = f.read()
 		js = json.loads(template)
-		self.conn = psycopg2.connect(host='127.0.0.1', port=5432, dbname='hxh', user = 'zafar', password='12344321')
+		self.conn = psycopg2.connect(host=js.get('db_host'), port=js.get('db_port'), dbname=js.get('db_name'), user = js.get('db_user'), password=js.get('db_password'))
 		self.cursor = self.conn.cursor()
 
 	def user_exists(self, telegram_id):
