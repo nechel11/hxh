@@ -20,7 +20,9 @@ def start(message):
 	btn_next = types.KeyboardButton('Go!')
 	markup.add(btn_next)
 	bot.send_message(message.chat.id, 
- 		f"Привет, <b>{message.from_user.first_name}</b>.",
+ 		f"Welcome, <b>{message.from_user.first_name}</b>. \n\
+		<b><u>go</u></b> button - set up bot preferences\n\
+		/settings - change existing bot preferences",
  		reply_markup=markup, parse_mode='html')
 
 
@@ -29,6 +31,8 @@ def get_user_text(message):
 	dict = {'page' : 0}
 	if message.text == 'Go!':
 		msg_handler.if_start(message, dict, bot)
+	elif message.text == '/settings' : 
+		msg_handler.if_settings(message, dict, bot)
 	else :
 		bot.send_message(message.chat.id, 'can not understand you...')
 

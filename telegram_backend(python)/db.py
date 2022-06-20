@@ -42,6 +42,14 @@ class BotDB:
 		rows = self.cursor.fetchall()
 		rows=[i[0] for i in rows]
 		return rows
+	
+	def delete_user_records(self, telegram_id):
+		self.cursor.execute("DELETE FROM records WHERE fk_telegram_id =(%s)", (str(telegram_id),))
+		return self.conn.commit()
+
+	def delete_user(self, telegram_id):
+		self.cursor.execute("DELETE FROM users WHERE telegram_id =(%s)", (str(telegram_id),))
+		return self.conn.commit()	
 
 	def close(self):
 		self.conn.close()

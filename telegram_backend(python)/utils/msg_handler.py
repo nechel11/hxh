@@ -8,6 +8,16 @@ from utils import hash_func
 
 BotDB = BotDB()
 
+def if_settings(message, dict, bot):
+	if(BotDB.user_exists(message.from_user.id)):
+		BotDB.delete_user_records(message.from_user.id)
+		BotDB.delete_user(message.from_user.id)
+		bot.send_message(message.chat.id, 'Your records have been removed')
+	keyboard = types.ReplyKeyboardRemove()
+	msg = bot.send_message(message.chat.id, 'Setting up new preferences', 
+		parse_mode='html', reply_markup = keyboard)
+	if_start(msg, dict, bot)
+
 def if_start(message, dict, bot):
 	keyboard = types.ReplyKeyboardRemove()
 	msg = bot.send_message(message.chat.id, 'Enter password <u>up to 32 symb</u>', 
