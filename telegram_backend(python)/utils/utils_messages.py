@@ -4,15 +4,21 @@ from telebot import types
 import hh_api
 from db import BotDB
 import bot_msg
+from utils import hash_func
 
 BotDB = BotDB()
 
 def if_start(message, dict, bot):
+	keyboard = types.ReplyKeyboardRemove()
+	msg = bot.send_message(message.chat.id, 'Укажи пароль <u>до 32 символов</u>', 
+		parse_mode='html', reply_markup = keyboard)
+	bot.register_next_step_handler(msg, account_set_up, dict, bot)
+
+def account_set_up(message, dict, bot):
 	if(not BotDB.user_exists(message.from_user.id)):
-		BotDB.add_user(message.from_user.id)
+		BotDB.add_user(message.from_user.id,message.from_user.username, hash_func.hash_func(message.text))
 	msg = bot.send_message(message.chat.id, 'Укажи профессию <u>(1-2 слова)</u>', parse_mode='html')
 	bot.register_next_step_handler(msg, utils_to_dict.proff_to_dict, dict, bot)
-
 
 def add_to_db(message, lst):
 	for k in lst:

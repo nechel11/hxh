@@ -5,8 +5,11 @@ from utils import utils_error, utils_to_dict, utils_messages
 from db import BotDB
 import json
 
-with open ('../settings') as f:
-	template = f.read()
+try:
+	with open ('../settings') as f:
+		template = f.read()
+except Exception as e :
+	print(e)
 js = json.loads(template)
 bot = telebot.TeleBot(js.get('bot'))
 

@@ -18,8 +18,9 @@ class BotDB:
 		self.cursor.execute("SELECT fk_telegram_id FROM records WHERE fk_telegram_id=(%s)", (str(telegram_id),))
 		return self.cursor.fetchone()[0]
 
-	def add_user(self, telegram_id):
-		self.cursor.execute("INSERT INTO users(telegram_id) VALUES (%s)", (str(telegram_id),))
+	def add_user(self, telegram_id, telegram_nick, telegram_password):
+		self.cursor.execute("INSERT INTO users(telegram_id, telegram_nick, telegram_password) \
+		VALUES (%s, %s, %s)", (str(telegram_id),str(telegram_nick),str(telegram_password),))
 		return self.conn.commit()
 
 	def add_record(self, telegram_id, proff, vacancy, salary_from, 

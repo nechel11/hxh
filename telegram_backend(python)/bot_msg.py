@@ -10,7 +10,7 @@ def make_html(template, settings):
 
 
 def print_msg(message, BotDB, per_page):
-	lst = ['id', 'telegram_id','proff', 'vacancy','salary_from', 'salary_to', 'requir','respons','url', 'company', 'schedule', 'vacancy_id', 'adress', 'currency']
+	lst = ['id' ,'proff', 'vacancy','salary_from', 'salary_to', 'requir','respons','url', 'company', 'schedule', 'vacancy_id', 'adress', 'currency', 'telegram_id']
 	id = BotDB.get_user_id(message.from_user.id)
 	html = []
 	res = BotDB.get_all_records(str(id), per_page)
