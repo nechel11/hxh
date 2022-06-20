@@ -17,7 +17,7 @@ bot = telebot.TeleBot(js.get('bot'))
 def start(message):
 	
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-	btn_next = types.KeyboardButton('Поехали!')
+	btn_next = types.KeyboardButton('Go!')
 	markup.add(btn_next)
 	bot.send_message(message.chat.id, 
  		f"Привет, <b>{message.from_user.first_name}</b>.",
@@ -27,10 +27,10 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def get_user_text(message):
 	dict = {'page' : 0}
-	if message.text == 'Поехали!':
+	if message.text == 'Go!':
 		msg_handler.if_start(message, dict, bot)
 	else :
-		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
+		bot.send_message(message.chat.id, 'can not understand you...')
 
 if __name__ == "__main__":
 	bot.polling(non_stop=True)
