@@ -1,15 +1,14 @@
 import telebot
 from telebot import types
-import hh_api
-from utils import utils_error, utils_to_dict, utils_messages
-from db import BotDB
+from utils import msg_handler, errors_checks
 import json
 
 try:
 	with open ('../settings') as f:
 		template = f.read()
 except Exception as e :
-	print(e)
+	errors_checks.to_loggs('error w/ settings file')
+	errors_checks.to_loggs(str(e))
 js = json.loads(template)
 bot = telebot.TeleBot(js.get('bot'))
 
@@ -29,7 +28,7 @@ def start(message):
 def get_user_text(message):
 	dict = {'page' : 0}
 	if message.text == 'Поехали!':
-		utils_messages.if_start(message, dict, bot)
+		msg_handler.if_start(message, dict, bot)
 	else :
 		bot.send_message(message.chat.id, 'пишешь что-то непонятное...')
 

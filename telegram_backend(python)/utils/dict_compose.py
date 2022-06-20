@@ -1,10 +1,7 @@
 import telebot
 from telebot import types
-import hh_api
 import re
-from db import BotDB
-import db
-from utils.utils_messages import if_finish
+from utils  import msg_handler
 
 def proff_to_dict(message, dict, bot):
 	dict['text'] = message.text
@@ -91,4 +88,4 @@ def per_page_to_dict(message, dict, bot):
 	btn_finish = types.KeyboardButton('finish')
 	markup.add(btn_finish)
 	msg = bot.send_message(message.chat.id, 'Жми <u>финиш</u> для окончания', reply_markup=markup, parse_mode='html')
-	bot.register_next_step_handler(msg, if_finish, dict, bot)
+	bot.register_next_step_handler(msg, msg_handler.if_finish, dict, bot)

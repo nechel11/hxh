@@ -1,6 +1,6 @@
 import requests
 import json
-import time
+from utils import errors_checks
 
 def add_adress(k) :
 	st = ""
@@ -68,7 +68,8 @@ def get_package(dict):
 		request = requests.get(URL, params)
 		request.raise_for_status()
 	except Exception as e:
-		print(e)
+		errors_checks.to_loggs('Api connect error')
+		errors_checks.to_loggs(str(e))
 	data = request.content.decode()
 	data = json.loads(data)
 	for k in data['items']:

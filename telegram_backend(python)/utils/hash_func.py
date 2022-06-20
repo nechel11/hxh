@@ -1,7 +1,7 @@
 import math
 import string
 
-def hash_func(st : string):
+def hash_func(st : string): #hashing users password
 	res_string = ""
 	for character in st:
 		ascii_value = ord(character)
