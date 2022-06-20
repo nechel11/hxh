@@ -3,7 +3,7 @@ from telebot import types
 import re
 from utils  import msg_handler
 
-def proff_to_dict(message, dict, bot):
+def proff_to_dict(message, dict, bot): #adding profession to searching dict
 	dict['text'] = message.text
 	dict['page'] = 0
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -15,7 +15,7 @@ def proff_to_dict(message, dict, bot):
 	bot.register_next_step_handler(msg, city_to_dict, dict, bot)
 	return dict
 
-def city_to_dict(message, dict, bot):
+def city_to_dict(message, dict, bot): #adding city to searching dict
 	if message.text=='Moscow':
 		dict['city'] = 1
 		markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -45,7 +45,7 @@ def city_to_dict(message, dict, bot):
 		bot.register_next_step_handler(msg_error, city_to_dict, dict, bot)
 	
 
-def currency_to_dict(message, dict, bot):
+def currency_to_dict(message, dict, bot): #adding currency to searching dict
 	if  message.text =='RUR' :
 		dict['currency'] = message.text
 		markup_3 = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -71,7 +71,7 @@ def currency_to_dict(message, dict, bot):
 		bot.register_next_step_handler(msg_error, currency_to_dict,dict, bot)	
 		
 
-def salary_to_dict(message, dict, bot):
+def salary_to_dict(message, dict, bot): #adding salary to searching dict
 	dict['salary'] = re.sub("[^0-9]", "", message.text)
 	markup_5 = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_per_page_1 = types.KeyboardButton(5)
@@ -82,7 +82,7 @@ def salary_to_dict(message, dict, bot):
 	msg = bot.send_message(message.chat.id, 'Choose ammount of vacancies or enter yours', reply_markup=markup_5)
 	bot.register_next_step_handler(msg, per_page_to_dict, dict, bot)
 
-def per_page_to_dict(message, dict, bot):
+def per_page_to_dict(message, dict, bot): #adding per_page vacancies to searching dict
 	dict['per_page'] = message.text
 	markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 	btn_finish = types.KeyboardButton('finish')
