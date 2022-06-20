@@ -17,3 +17,10 @@ def dict_cheq(dct, message, bot) : # check if dict is filled
 	else:
 		error_handler(message, dct, bot)
 		return False
+
+def logger(str): #making loggs instead of using prints
+	with open('../loggs.log', 'a') as f:
+		f.seek(0)
+		f.write(str)
+		f.write("\n")
+
