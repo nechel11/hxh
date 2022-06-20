@@ -20,9 +20,7 @@ def start(message):
 	btn_next = types.KeyboardButton('Go!')
 	markup.add(btn_next)
 	bot.send_message(message.chat.id, 
- 		f"Welcome, <b>{message.from_user.first_name}</b>. \n\
-		<b><u>go</u></b> button - set up bot preferences\n\
-		/settings - change existing bot preferences",
+ 		f"Welcome, <b>{message.from_user.first_name}</b>.",
  		reply_markup=markup, parse_mode='html')
 
 
