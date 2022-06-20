@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	
 )
 
 
@@ -31,20 +32,29 @@ func contacts(w http.ResponseWriter, r *http.Request){
 	tmpl.ExecuteTemplate(w, "contacts", nil)
 }
 
-func save_article(w http.ResponseWriter, r *http.Request){
-	title := r.FormValue("title")
-	anons := r.FormValue("anons")
-	full_text := r.FormValue("full_text")
+func login(w http.ResponseWriter, r *http.Request){
+	tmpl, err := template.ParseFiles("templates/login_form.html", "templates/header.html")
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+	tmpl.ExecuteTemplate(w, "login_form", nil)
 }
 
+func registerauth(w http.ResponseWriter, r *http.Request){
+	nick := r.FormValue("username")
+	password := hash_func(r.FormValue("password"))
 
-func handleRequest(){
+}
+
+func handleFunc(){
 	http.HandleFunc("/", index)
 	http.HandleFunc("/contacts/", contacts)
 	http.HandleFunc("/create/", create)
+	http.HandleFunc("/login/", login)
+	http.HandleFunc("/registerauth/", registerauth)
 	http.ListenAndServe(":8080", nil)
 }
 
 func main(){
-	handleRequest()
+	handleFunc()
 }
