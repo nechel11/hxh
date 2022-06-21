@@ -43,6 +43,7 @@ func login(w http.ResponseWriter, r *http.Request){
 func registerauth(w http.ResponseWriter, r *http.Request){
 	nick := r.FormValue("username")
 	password := hash_func(r.FormValue("password"))
+	fmt.Printf(password, nick)
 
 }
 
