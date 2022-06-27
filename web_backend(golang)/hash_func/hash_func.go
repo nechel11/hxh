@@ -1,11 +1,11 @@
-package main
+package hash_func
 
 import (
 	"math"
 	"strconv"
 )
 
-func hash_func(x string) (st string){
+func To_hash(x string) (st string){
 	for j:=0; j < len(x); j++{
 		chisl := float64(x[j])
 		tmp := int(math.Sqrt(chisl))

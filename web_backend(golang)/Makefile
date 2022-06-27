@@ -1,4 +1,5 @@
-SRCS = main.go hash_func.go
+SRCS = main.go
 GO = go run
 
-$(GO) $(SRCS)
+all : $(SRCS)
+	$(GO) $(SRCS)

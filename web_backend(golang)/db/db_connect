@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
 	"database/sql"
@@ -31,28 +31,25 @@ const  (
 	password="12344321"
 )
 
-func main() {
+
+func connect_db() {
 	psqconn := fmt.Sprintf("host= %s port = %d user = %s password = %s dbname = %s sslmode=disable", host, port, user, password, dbname)
 	db, err := sql.Open("postgres", psqconn)
 	if err != nil {
-		fmt.Println("ошибка1")
 		panic(err)
 	}
 	defer db.Close()
-
-	res, err := db.Query("Select fk_telegram_id, vacancy FROM  records")
-	if err != nil {
-		fmt.Println("ошибка2")
-		panic(err)
-	}
-	for res.Next(){
-		var user User
-		err = res.Scan(&user.Fk_telegram_id, &user.Vacancy)
-		if err != nil {
-			fmt.Println("ошибка3")
-			panic(err)
-			}
-		fmt.Println(fmt.Sprintf("FK: %d with proff %s", user.Fk_telegram_id, user.Vacancy))
-	}
-
 }
+	// res, err := db.Query("Select fk_telegram_id, vacancy FROM  records")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// for res.Next(){
+	// 	var user User
+	// 	err = res.Scan(&user.Fk_telegram_id, &user.Vacancy)
+	// 	if err != nil {
+	// 		panic(err)
+	// 		}
+	// 	fmt.Println(fmt.Sprintf("FK: %d with proff %s", user.Fk_telegram_id, user.Vacancy))
+	// }
+
