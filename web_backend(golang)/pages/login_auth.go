@@ -5,14 +5,12 @@ import (
 	"html/template"
 	"net/http"
 	"../utils"
-
-	
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request){
 	tmpl, err := template.ParseFiles("templates/login_form.html", "templates/header.html")
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		fmt.Fprint(w, err.Error())
 	}
 	fmt.Println("*****loginHandler running*****")
 	tmpl.ExecuteTemplate(w, "login_form", nil)
@@ -21,7 +19,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request){
 func LoginAuth(w http.ResponseWriter, r *http.Request){
 	tmpl, err := template.ParseFiles("templates/loginauth.html", "templates/header.html")
 	if err != nil {
-		fmt.Fprintf(w, err.Error())
+		fmt.Fprint(w, err.Error())
 	}
 	fmt.Println("*****loginAuthHandler running*****")
 	r.ParseForm()

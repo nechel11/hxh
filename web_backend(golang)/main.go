@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"database/sql"
 	_ "github.com/lib/pq"
@@ -17,26 +16,10 @@ const  (
 	password="12344321"
 )
 
-func index(w http.ResponseWriter, r *http.Request){
-	tmpl, err := template.ParseFiles("templates/index.html", "templates/header.html")
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
-	tmpl.ExecuteTemplate(w, "index", nil)
-}
-
-func create(w http.ResponseWriter, r *http.Request){
-	tmpl, err := template.ParseFiles("templates/create.html", "templates/header.html")
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
-	tmpl.ExecuteTemplate(w, "create", nil)
-}
-
 func handleFunc(){
-	http.HandleFunc("/", index)
+	http.HandleFunc("/", pages.Index)
 	http.HandleFunc("/contacts/", pages.Contacts)
-	http.HandleFunc("/create/", create)
+	http.HandleFunc("/create/", pages.Create)
 	http.HandleFunc("/login/", pages.LoginHandler)
 	http.HandleFunc("/loginauth/", pages.LoginAuth)
 	http.ListenAndServe(":8080", nil)
