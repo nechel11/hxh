@@ -1,4 +1,4 @@
-package hash_func
+package utils
 
 import (
 	"math"

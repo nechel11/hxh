@@ -4,12 +4,12 @@
 <h2> Account login</h2>
 <ul>Enter your login and password which you used in telegram</ul>
 
-<form action="/registerauth" method="POST">
-	<label for="username">Nickname:</label><br>
-	<input type="text" id="username" name="username"><br>
-	<label for="password">Password:</label><br>
-	<input type="password" id="password" name="password"><br><br>
-	<button class="btn btn-warning">Submit</button>
+<form action="/loginauth" method="POST">
+    <label for="username">Name:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <input type="submit" value="Submit">
 </form>
 <br><br>
 {{if .}}

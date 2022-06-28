@@ -6,8 +6,7 @@ import (
 	"net/http"
 	"database/sql"
 	_ "github.com/lib/pq"
-	"./contacts"
-	 "./login"
+	"./pages"
 )
 
 const  (
@@ -36,10 +35,10 @@ func create(w http.ResponseWriter, r *http.Request){
 
 func handleFunc(){
 	http.HandleFunc("/", index)
-	http.HandleFunc("/contacts/", contacts.Contacts)
+	http.HandleFunc("/contacts/", pages.Contacts)
 	http.HandleFunc("/create/", create)
-	// http.HandleFunc("/login/", login.LoginHandler)
-	// http.HandleFunc("/registerauth/", registerauth)
+	http.HandleFunc("/login/", pages.LoginHandler)
+	http.HandleFunc("/loginauth/", pages.LoginAuth)
 	http.ListenAndServe(":8080", nil)
 }
 

@@ -1,4 +1,4 @@
-package contacts
+package pages
 
 import (
 	"fmt"
