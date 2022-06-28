@@ -1,19 +1,20 @@
-{{define "login_form"}}
+{{define "login"}}
 {{template "header"}}
 
-<h2> Account login</h2>
-<ul>Enter your login and password which you used in telegram</ul>
+<h2>Login</h2><br>
 
 <form action="/loginauth" method="POST">
     <label for="username">Name:</label><br>
     <input type="text" id="username" name="username"><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="Submit">
-</form>
+	 <button class="btn btn-warning">Share</button>
+</form> 
+
 <br><br>
 {{if .}}
     {{.}}
 {{end}}
+
 
 {{end}}
