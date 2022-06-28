@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	// "../utils"
+	"../utils"
+	_ "github.com/lib/pq"
+	
+	
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request){
@@ -21,5 +24,7 @@ func LoginAuth(w http.ResponseWriter, r *http.Request){
 	r.ParseForm()
 	username := r.FormValue("username")
 	password := r.FormValue("password")
-	fmt.Println("username:", username, "password:", password)
+	hash := utils.To_hash(password)
+	fmt.Println("username:", username, "password:", password, hash)
+	if_user(username, password, hash)
 }

@@ -1,13 +1,12 @@
-package utils
+package pages
 
 import (
 	"database/sql"
 	"fmt"
-
 	_ "github.com/lib/pq"
 )
 
-type User struct {
+type User_info struct {
 	Fk_telegram_id int `json:"name"`
 	Proff string `json:"proff"`
 	Vacancy string `json:"vacancy"`
@@ -23,6 +22,13 @@ type User struct {
 	Currency string `json:"currency"`
 }
 
+type User struct {
+	User_id int `json:user_id`
+	Telegram_id int `json:telegram_id`
+	Telegram_nick string `json:telegram_nick`
+	Telegram_password string `json:telegram_password`
+}
+
 const  (
 	host = "127.0.0.1" 
 	port=5432
@@ -31,25 +37,26 @@ const  (
 	password="12344321"
 )
 
-
-func connect_db() {
+func if_user(username, password, hash string)  {
 	psqconn := fmt.Sprintf("host= %s port = %d user = %s password = %s dbname = %s sslmode=disable", host, port, user, password, dbname)
 	db, err := sql.Open("postgres", psqconn)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+	is_user, err := db.Query(fmt.Sprintf("Select telegram_nick,telegram_password from users where telegram_nick='%s'", username))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(is_user)
+	for is_user.Next(){
+		var user User
+		err = is_user.Scan(&user.Telegram_nick, &user.Telegram_password)
+		if err != nil {
+			panic(err)
+			}
+		fmt.Printf(fmt.Sprintf("FK: %s with proff %s\n", user.Telegram_nick, user.Telegram_password))
+	}
+
 }
-	// res, err := db.Query("Select fk_telegram_id, vacancy FROM  records")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// for res.Next(){
-	// 	var user User
-	// 	err = res.Scan(&user.Fk_telegram_id, &user.Vacancy)
-	// 	if err != nil {
-	// 		panic(err)
-	// 		}
-	// 	fmt.Println(fmt.Sprintf("FK: %d with proff %s", user.Fk_telegram_id, user.Vacancy))
-	// }
 
