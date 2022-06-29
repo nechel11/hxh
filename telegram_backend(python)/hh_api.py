@@ -32,7 +32,11 @@ def add_salary(k):
 			dct['salary_to'] = str(salary_start['to'])
 		dct['currency'] = salary_start['currency']
 		return dct
-	return None
+	else:
+		dct['salary_from'] = 'n/a'
+		dct['salary_to'] = 'n/a'
+		dct['currency'] = 'n/a'
+		return dct
 	
 
 def add_req(k):
