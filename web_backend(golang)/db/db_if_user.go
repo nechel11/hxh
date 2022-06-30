@@ -6,7 +6,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type User struct {
+type User_struct struct {
 	User_id int `json:"user_id"`
 	Telegram_id int `json:"telegram_id"`
 	Telegram_nick string `json:"telegram_nick"`
@@ -33,15 +33,15 @@ type User_info struct {
 }
 
 const  (
-	host = "127.0.0.1" 
-	port=5432
-	dbname="hxh"
-	user = "zafar"
-	password="12344321"
+	db_host = "127.0.0.1" 
+	db_port=5432
+	db_name="hxh"
+	db_user = "zafar"
+	db_password="12344321"
 )
 
 func Db_connect() (x *sql.DB){
-	psqconn := fmt.Sprintf("host= %s port = %d user = %s password = %s dbname = %s sslmode=disable", host, port, user, password, dbname)
+	psqconn := fmt.Sprintf("host= %s port = %d user = %s password = %s dbname = %s sslmode=disable", db_host, db_port, db_user, db_password, db_name)
 	db, err := sql.Open("postgres", psqconn)
 	if err != nil {
 		panic(err)
@@ -49,9 +49,9 @@ func Db_connect() (x *sql.DB){
 	return db
 }
 
-var recs = []User_info{}
+var Recs = []User_info{}
 
-func If_user(username, pass, hash string) *User {
+func If_user(username, pass, hash string) *User_struct {
 	db := Db_connect()
 	defer db.Close()
 	is_user, err := db.Query(fmt.Sprintf("Select user_id,telegram_id,telegram_nick,telegram_password from users where telegram_nick='%s'", username))
@@ -60,7 +60,7 @@ func If_user(username, pass, hash string) *User {
 		panic(err)
 	}
 	for is_user.Next(){
-		var user User
+		var user User_struct
 		err = is_user.Scan(&user.User_id, &user.Telegram_id,&user.Telegram_nick, &user.Telegram_password)
 		if err != nil {
 			panic(err)
@@ -71,7 +71,7 @@ func If_user(username, pass, hash string) *User {
 			return &user
 		}
 	}
-	var not_user User
+	var not_user User_struct
 	not_user.Is_user = false
 	return &not_user
 }
@@ -83,6 +83,7 @@ func User_records(username string) *[]User_info{
 	if err != nil {
 		panic(err)
 }
+	Recs = []User_info{}
 	for records.Next(){
 		var rec_list User_info
 		err = records.Scan(&rec_list.Records_id,&rec_list.Proff, &rec_list.Vacancy, &rec_list.Salary_from, 
@@ -92,8 +93,8 @@ func User_records(username string) *[]User_info{
 		if err != nil {
 			panic(err)
 			}
-			recs=append(recs, rec_list)
+			Recs=append(Recs, rec_list)
 		//  fmt.Println(rec_list.Records_id, rec_list.Vacancy_id)
 	}
-	return &recs
+	return &Recs
 }

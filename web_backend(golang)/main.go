@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	_ "github.com/lib/pq"
 	"./pages"
 )
 

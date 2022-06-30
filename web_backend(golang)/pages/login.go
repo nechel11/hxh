@@ -15,7 +15,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request){
 		fmt.Fprint(w, err.Error())
 	}
 	tmpl.ExecuteTemplate(w, "login", nil)
-
 }
 
 func LoginAuth(w http.ResponseWriter, r *http.Request){
@@ -27,13 +26,11 @@ func LoginAuth(w http.ResponseWriter, r *http.Request){
 	fmt.Println("username:", username, "password:", password, hash)
 	
 	is_user := db.If_user(username, password, hash)
-	records := *db.User_records(username)
-	fmt.Println(records[0].Vacancy)
 	if !is_user.Is_user{
 		tmpl, _ := template.ParseFiles("templates/login.html", "templates/header.html")
 		tmpl.ExecuteTemplate(w, "login", "check username and password")
 	} else {
-		tmpl, _ := template.ParseFiles("templates/index.html", "templates/header.html")
-		tmpl.ExecuteTemplate(w, "index", "You logged in")
+		tmpl, _ := template.ParseFiles("templates/loginauth.html", "templates/header.html")
+		tmpl.ExecuteTemplate(w, "loginauth", "You logged in")
 	}
 }
