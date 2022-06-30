@@ -16,7 +16,8 @@ func handleFunc(){
 	http.HandleFunc("/create", pages.Create)
 	http.HandleFunc("/contacts", pages.Contacts)
 	http.HandleFunc("/login", pages.LoginHandler)
-	http.HandleFunc("/records", pages.LoginAuth)
+	http.HandleFunc("/records", pages.Records)
+	http.HandleFunc("/loginauth", pages.LoginAuth)
 	http.ListenAndServe("localhost:8070", nil)
 }
 

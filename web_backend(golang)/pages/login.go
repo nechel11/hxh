@@ -33,8 +33,7 @@ func LoginAuth(w http.ResponseWriter, r *http.Request){
 		tmpl, _ := template.ParseFiles("templates/login.html", "templates/header.html")
 		tmpl.ExecuteTemplate(w, "login", "check username and password")
 	} else {
-		tmpl, _ := template.ParseFiles("templates/records.html", "templates/header.html")
-		tmpl.ExecuteTemplate(w, "records", records)
+		tmpl, _ := template.ParseFiles("templates/index.html", "templates/header.html")
+		tmpl.ExecuteTemplate(w, "index", "You logged in")
 	}
-	
 }

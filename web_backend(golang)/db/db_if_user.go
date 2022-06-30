@@ -72,6 +72,7 @@ func If_user(username, pass, hash string) *User {
 		}
 	}
 	var not_user User
+	not_user.Is_user = false
 	return &not_user
 }
 
