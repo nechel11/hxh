@@ -50,6 +50,7 @@ func Db_connect() (x *sql.DB){
 }
 
 var Recs = []User_info{}
+var User =  User_struct{}
 
 func If_user(username, pass, hash string) *User_struct {
 	db := Db_connect()
@@ -59,21 +60,20 @@ func If_user(username, pass, hash string) *User_struct {
 	if err != nil {
 		panic(err)
 	}
+	User = User_struct{}
 	for is_user.Next(){
-		var user User_struct
-		err = is_user.Scan(&user.User_id, &user.Telegram_id,&user.Telegram_nick, &user.Telegram_password)
+		err = is_user.Scan(&User.User_id, &User.Telegram_id,&User.Telegram_nick, &User.Telegram_password)
 		if err != nil {
 			panic(err)
 			}
-		if user.Telegram_nick == username && user.Telegram_password == hash{
-			user.Is_user = true
-			fmt.Printf("user: %s pass %s\n", user.Telegram_nick, user.Telegram_password)
-			return &user
+		if User.Telegram_nick == username && User.Telegram_password == hash{
+			User.Is_user = true
+			fmt.Printf("user: %s pass %s\n", User.Telegram_nick, User.Telegram_password)
+			return &User
 		}
 	}
-	var not_user User_struct
-	not_user.Is_user = false
-	return &not_user
+
+	return &User
 }
 
 func User_records(username string) *[]User_info{

@@ -1,7 +1,7 @@
 package pages
 
 import (
-	// "fmt"
+	"fmt"
 	"html/template"
 	"net/http"
 	"../db"
@@ -9,9 +9,15 @@ import (
 
 func Records(w http.ResponseWriter, r *http.Request){
 	tmpl, _ := template.ParseFiles("templates/records.html", "templates/header.html")
-	// records := *db.User_records(User_db.Telegram_nick)
-	// fmt.Println(records[0].Vacancy)
-	rc := db.User_records("nechel1233")
-	tmpl.ExecuteTemplate(w, "records", rc)
+	records := *db.User_records(db.User.Telegram_nick)
+
+	if len(records) == 0{
+		tmpl.ExecuteTemplate(w, "records", nil)
+	} else {
+		tmpl.ExecuteTemplate(w, "records", records)
+		return
+	}
+	fmt.Println("db. user", db.User)
+	fmt.Println("records", records)
 
 }

@@ -6,11 +6,12 @@
 			<div class="shadowbox">
 				<h2>{{.Vacancy}}</h2>
 				<p>{{.Requir}}</p>
+				<a href="/records/{{.Vacancy_id}}" class="btn btn-danger"> More</a>
 			</div>
 			{{end}}
 			<h1>Main page.</h1>
 		{{else}}
-			PLEASE LOGIN
+			<h2> Please login </h2>
 		{{end}}	
 	</main>
 </div>
