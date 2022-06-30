@@ -50,6 +50,7 @@ func Db_connect() (x *sql.DB){
 }
 
 var Recs = []User_info{}
+var Show_rec = User_info{}
 var User =  User_struct{}
 
 func If_user(username, pass, hash string) *User_struct {
@@ -97,4 +98,26 @@ func User_records(username string) *[]User_info{
 		//  fmt.Println(rec_list.Records_id, rec_list.Vacancy_id)
 	}
 	return &Recs
+}
+
+func Get_one_record(vac_id string) *User_info{
+	db := Db_connect()
+	defer db.Close()
+	records, err := db.Query(fmt.Sprintf("SELECT records_id,proff, vacancy, salary_from, salary_to, requir, respons, url, company, schedule, vacancy_id, adress, currency, fk_telegram_id FROM records inner join users  on users.telegram_id = records.fk_telegram_id WHERE vacancy_id='%s'", vac_id))
+	if err != nil {
+		panic(err)
+	}
+	Show_rec = User_info{}
+	for records.Next(){
+		var rec_list User_info
+		err = records.Scan(&rec_list.Records_id,&rec_list.Proff, &rec_list.Vacancy, &rec_list.Salary_from, 
+			&rec_list.Salary_to, &rec_list.Requir, &rec_list.Respons, &rec_list.Url, 
+			&rec_list.Company, &rec_list.Schedule, &rec_list.Vacancy_id, &rec_list.Adress, 
+			&rec_list.Currency, &rec_list.Fk_telegram_id) 
+			if err != nil {
+			panic(err)
+			}
+		Show_rec = rec_list
+	}
+	return &Show_rec
 }

@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+
 	"../db"
+	"github.com/gorilla/mux"
 )
 
 func Records(w http.ResponseWriter, r *http.Request){
@@ -20,4 +22,12 @@ func Records(w http.ResponseWriter, r *http.Request){
 	fmt.Println("db. user", db.User)
 	fmt.Println("records", records)
 
+}
+
+func Show_records (w http.ResponseWriter, r *http.Request){
+	tmpl, _ := template.ParseFiles("templates/one_record.html", "templates/header.html")
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
+	res := db.Get_one_record(vars["id"])
+	tmpl.ExecuteTemplate(w, "one_record", res)
 }

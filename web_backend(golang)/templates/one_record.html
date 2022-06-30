@@ -1,0 +1,14 @@
+{{define "one_record"}}
+{{template "header"}}
+</table>
+<b><u>{{.Vacancy}}</u></b>  {{.Company}} | {{.Schedule}}
+{{.Adress}}
+<b> Зп от <u>{{.Salary_from}}</u> до <u>{{.Salary_to}}</u> Валюта {{.Currency}} </u></b>
+<b><u>Обязанности :</u></b>
+	{{.Respons}}
+<b><u>Требования :</u></b>
+	{{.Requir}}
+<a href= '{{.Url}}' > ссылка на вакансию</a>
+</table>
+</div>
+{{end}}
