@@ -4,7 +4,7 @@ telegram bot using hh.api and web version
 ## How it works
 <details>
     <summary>bot part</summary>
-    ![Peek 2022-08-08 12-23](https://user-images.githubusercontent.com/91884862/183386377-b4e11056-4cca-4074-9aa7-f2857c25cec3.gif)
+    https://user-images.githubusercontent.com/91884862/183386377-b4e11056-4cca-4074-9aa7-f2857c25cec3.gif
 </details>
 
 ## How to run 
