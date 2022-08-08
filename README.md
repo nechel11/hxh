@@ -1,5 +1,5 @@
 # hxh
-telegram bot using hh.api and web version
+hxh is telegram bot using hh.api it also provides web version.
 
 ## How it works
 
