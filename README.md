@@ -1,5 +1,5 @@
 # hxh
-hxh is telegram bot using hh.api.
+hxh is telegram bot using hh.api. it adds users data in postgres. Users passwords are represented in postgres in hash-value
 
 ## How it works
 ![hxh1](https://user-images.githubusercontent.com/91884862/183388274-917b7f66-9fdf-451e-a445-8e3ddd35d881.gif)
