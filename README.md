@@ -2,8 +2,7 @@
 hxh is telegram bot using hh.api it also provides web version.
 
 ## How it works
-
-![Peek 2022-08-08 12-23](https://user-images.githubusercontent.com/91884862/183387612-760f5417-743d-49eb-80be-fd9d432853d0.gif)
+![hxh1](https://user-images.githubusercontent.com/91884862/183388274-917b7f66-9fdf-451e-a445-8e3ddd35d881.gif)
 
 ## How to run 
 ```
