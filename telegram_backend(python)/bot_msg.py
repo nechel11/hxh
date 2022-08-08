@@ -15,7 +15,6 @@ def print_msg(message, BotDB, per_page): # print msg in teleg
 	id = BotDB.get_user_id(message.from_user.id)
 	html = []
 	res = BotDB.get_all_records(str(id), per_page)
-	print(res)
 	message_to_print= []
 	for i in res:
 		dct = {}
