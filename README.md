@@ -11,6 +11,8 @@ git clone https://github.com/nechel11/hxh.git
 ### bot part
 ```
 cd hxh/telegram_backend\(python\)
+mv setting_example settings
+// fill settings fille//
 python3 telegram.py
 ```
 ### web part
