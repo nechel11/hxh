@@ -1,0 +1,6 @@
+{"bot" : "YOUR BOT ID",
+"db_host" : "POSTGRES HOST",
+"db_port" : "POSTGRES PORT",
+"db_name" : "POSTGRES DB NAME",
+"db_user" : "POSTGRES USERNAME",
+"db_password" : "POSTGRES PASSWROD"}

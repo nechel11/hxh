@@ -34,5 +34,4 @@ def get_user_text(message):
 	else :
 		bot.send_message(message.chat.id, 'can not understand you...')
 
-if __name__ == "__main__":
-	bot.polling(non_stop=True)
+bot.polling(non_stop=True)

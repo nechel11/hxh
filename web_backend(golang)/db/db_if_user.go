@@ -73,7 +73,6 @@ func If_user(username, pass, hash string) *User_struct {
 			return &User
 		}
 	}
-
 	return &User
 }
 
