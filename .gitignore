@@ -2,4 +2,4 @@ __pycache__/
 */__pycache__/
 settings
 */loggs.log
-web_backend(golang)
+*web_backend(golang)/
