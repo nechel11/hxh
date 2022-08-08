@@ -12,7 +12,7 @@ git clone https://github.com/nechel11/hxh.git
 ```
 cd hxh/telegram_backend\(python\)
 mv setting_example settings
-// fill settings fille//
+<b> fill settings fille </b>
 python3 telegram.py
 ```
 ### web part
